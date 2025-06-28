@@ -5,14 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, Eye, Calendar, Clock, Users } from 'lucide-react';
 import { ProjectModal } from './ProjectModal';
-import { ProjectViewModal } from './ProjectViewModal';
 import { toast } from '@/hooks/use-toast';
 
 export const ProjectList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
-  const [viewingProject, setViewingProject] = useState(null);
   const [projects, setProjects] = useState([
     {
       id: '1',
@@ -22,8 +19,7 @@ export const ProjectList: React.FC = () => {
       progress: 75,
       estimatedHours: 120,
       actualHours: 90,
-      dueDate: '2024-01-15',
-      description: 'Building a modern e-commerce platform with React and Node.js'
+      dueDate: '2024-01-15'
     },
     {
       id: '2',
@@ -33,8 +29,7 @@ export const ProjectList: React.FC = () => {
       progress: 45,
       estimatedHours: 200,
       actualHours: 90,
-      dueDate: '2024-02-28',
-      description: 'Developing a cross-platform mobile application for iOS and Android'
+      dueDate: '2024-02-28'
     },
     {
       id: '3',
@@ -44,8 +39,7 @@ export const ProjectList: React.FC = () => {
       progress: 100,
       estimatedHours: 80,
       actualHours: 85,
-      dueDate: '2023-12-20',
-      description: 'Creating a comprehensive analytics dashboard with real-time data visualization'
+      dueDate: '2023-12-20'
     }
   ]);
 
@@ -60,8 +54,10 @@ export const ProjectList: React.FC = () => {
 
   const handleViewProject = (project: any) => {
     console.log('View project:', project);
-    setViewingProject(project);
-    setIsViewModalOpen(true);
+    toast({
+      title: "Project Details",
+      description: `Viewing details for "${project.name}"`,
+    });
   };
 
   const handleEditProject = (project: any) => {
@@ -89,11 +85,6 @@ export const ProjectList: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingProject(null);
-  };
-
-  const handleCloseViewModal = () => {
-    setIsViewModalOpen(false);
-    setViewingProject(null);
   };
 
   return (
@@ -207,12 +198,6 @@ export const ProjectList: React.FC = () => {
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
         project={editingProject}
-      />
-
-      <ProjectViewModal 
-        isOpen={isViewModalOpen} 
-        onClose={handleCloseViewModal} 
-        project={viewingProject}
       />
     </div>
   );

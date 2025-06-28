@@ -9,25 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Check, X, Clock, Eye, User, Calendar } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
-interface Approval {
-  id: string;
-  employeeName: string;
-  employeeId: string;
-  date: string;
-  hours: number;
-  project: string;
-  description: string;
-  status: 'pending' | 'approved' | 'rejected';
-  submittedAt: string;
-  escalationLevel: string;
-  approvedAt?: string;
-  approvedBy?: string;
-  rejectedAt?: string;
-  rejectedBy?: string;
-  rejectionReason?: string;
-}
-
-const DEMO_APPROVALS: Approval[] = [
+const DEMO_APPROVALS = [
   {
     id: '1',
     employeeName: 'Employee Brown',
@@ -85,8 +67,8 @@ const DEMO_APPROVALS: Approval[] = [
 
 export const ApprovalsList: React.FC = () => {
   const { user } = useAuth();
-  const [approvals, setApprovals] = useState<Approval[]>(DEMO_APPROVALS);
-  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
+  const [approvals, setApprovals] = useState(DEMO_APPROVALS);
+  const [selectedApproval, setSelectedApproval] = useState<any>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   const getStatusBadge = (status: string) => {
@@ -105,7 +87,7 @@ export const ApprovalsList: React.FC = () => {
   const handleApprove = (id: string) => {
     setApprovals(prev => prev.map(approval => 
       approval.id === id 
-        ? { ...approval, status: 'approved' as const, approvedBy: user?.name, approvedAt: new Date().toISOString() }
+        ? { ...approval, status: 'approved', approvedBy: user?.name, approvedAt: new Date().toISOString() }
         : approval
     ));
   };
@@ -115,7 +97,7 @@ export const ApprovalsList: React.FC = () => {
       approval.id === id 
         ? { 
             ...approval, 
-            status: 'rejected' as const, 
+            status: 'rejected', 
             rejectedBy: user?.name, 
             rejectedAt: new Date().toISOString(),
             rejectionReason: reason
