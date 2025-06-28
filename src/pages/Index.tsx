@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { LoginForm } from '@/components/Login/LoginForm';
 import { Header } from '@/components/Layout/Header';
-import { Sidebar } from '@/components/Layout/Sidebar';
 import { DashboardCards } from '@/components/Dashboard/DashboardCards';
 import { TimeTracker } from '@/components/TimeTracker/TimeTracker';
 import { ProjectList } from '@/components/Projects/ProjectList';
@@ -12,6 +11,8 @@ import { ReportsView } from '@/components/Reports/ReportsView';
 import { ClientList } from '@/components/Clients/ClientList';
 import { UserList } from '@/components/Users/UserList';
 import { ApprovalsList } from '@/components/Approvals/ApprovalsList';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/Layout/AppSidebar';
 
 const Index = () => {
   const { isAuthenticated } = useAuth();
@@ -70,15 +71,20 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="flex">
-        <Sidebar currentView={currentView} onViewChange={setCurrentView} />
-        <main className="flex-1 p-8">
-          {renderMainContent()}
-        </main>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-gray-50">
+        <AppSidebar currentView={currentView} onViewChange={setCurrentView} />
+        <div className="flex-1 flex flex-col">
+          <header className="h-16 flex items-center justify-between px-6 bg-white border-b border-gray-200">
+            <SidebarTrigger className="lg:hidden" />
+            <Header />
+          </header>
+          <main className="flex-1 p-8 overflow-auto">
+            {renderMainContent()}
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
