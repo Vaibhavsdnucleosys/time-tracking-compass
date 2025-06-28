@@ -9,6 +9,9 @@ import { TimeTracker } from '@/components/TimeTracker/TimeTracker';
 import { ProjectList } from '@/components/Projects/ProjectList';
 import { TaskList } from '@/components/Tasks/TaskList';
 import { ReportsView } from '@/components/Reports/ReportsView';
+import { ClientList } from '@/components/Clients/ClientList';
+import { UserList } from '@/components/Users/UserList';
+import { ApprovalsList } from '@/components/Approvals/ApprovalsList';
 
 const Index = () => {
   const { isAuthenticated } = useAuth();
@@ -42,32 +45,11 @@ const Index = () => {
       case 'reports':
         return <ReportsView />;
       case 'clients':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Clients Management</h2>
-            <div className="text-center text-gray-600 py-12">
-              <p>Client management interface will be displayed here.</p>
-            </div>
-          </div>
-        );
+        return <ClientList />;
       case 'users':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">User Management</h2>
-            <div className="text-center text-gray-600 py-12">
-              <p>User management interface will be displayed here.</p>
-            </div>
-          </div>
-        );
+        return <UserList />;
       case 'approvals':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">Timesheet Approvals</h2>
-            <div className="text-center text-gray-600 py-12">
-              <p>Timesheet approval interface will be displayed here.</p>
-            </div>
-          </div>
-        );
+        return <ApprovalsList />;
       case 'timesheet-requests':
         return (
           <div className="space-y-6">

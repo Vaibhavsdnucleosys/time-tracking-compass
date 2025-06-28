@@ -10,7 +10,8 @@ import {
   BarChart3, 
   Settings,
   Plus,
-  CheckSquare
+  CheckSquare,
+  Home
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -23,7 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange }) =
 
   const getMenuItems = () => {
     const baseItems = [
-      { id: 'dashboard', label: 'Dashboard', icon: BarChart3 }
+      { id: 'dashboard', label: 'Dashboard', icon: Home }
     ];
 
     if (user?.role === 'employee') {
@@ -56,27 +57,35 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange }) =
   const menuItems = getMenuItems();
 
   return (
-    <div className="bg-gray-900 text-white w-64 min-h-screen p-4">
-      <nav className="space-y-2">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Button
-              key={item.id}
-              variant={currentView === item.id ? "secondary" : "ghost"}
-              className={`w-full justify-start text-left ${
-                currentView === item.id 
-                  ? 'bg-gray-700 text-white' 
-                  : 'text-gray-300 hover:text-white hover:bg-gray-800'
-              }`}
-              onClick={() => onViewChange(item.id)}
-            >
-              <Icon className="h-5 w-5 mr-3" />
-              {item.label}
-            </Button>
-          );
-        })}
-      </nav>
+    <div className="bg-white border-r border-gray-200 w-64 min-h-screen shadow-sm">
+      <div className="p-4">
+        <div className="mb-6">
+          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            Navigation
+          </h3>
+        </div>
+        <nav className="space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = currentView === item.id;
+            return (
+              <Button
+                key={item.id}
+                variant="ghost"
+                className={`w-full justify-start text-left rounded-xl transition-smooth ${
+                  isActive 
+                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+                onClick={() => onViewChange(item.id)}
+              >
+                <Icon className={`h-5 w-5 mr-3 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
+                <span className="font-medium">{item.label}</span>
+              </Button>
+            );
+          })}
+        </nav>
+      </div>
     </div>
   );
 };
